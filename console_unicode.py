@@ -8,7 +8,7 @@ def setup_console(sys_enc="utf-8"):
         # win32
         if sys.platform.startswith("win"):
             import ctypes
-            enc = "cp%d" % ctypes.windll.kernel32.GetOEMCP() #TODO: ��������� �� win64/python64
+            enc = "cp%d" % ctypes.windll.kernel32.GetOEMCP() #TODO: win64/python64
         else:
             # Linux
             enc = (sys.stdout.encoding if sys.stdout.isatty() else
