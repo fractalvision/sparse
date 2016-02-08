@@ -1,7 +1,7 @@
 # sparse
 Use the following commands in interactive mode:		
 
-dbbuild : builds the database initially, parsing all words and their links from the website.		
+dbbuild : builds the initial database, parsing all words and their links from the website.		
 dbrebuild : updates the existing database automatically.		
 webstat : lists total numbers of the words on the website.		
 dbstat : prints words/links in db.		
@@ -19,3 +19,5 @@ dbcleanup : detects and removes dead words (with no links - misspelled, unmodera
 exportcsvnum : exports links db with a position number for each word charachter.		
 exportcsvid : exports links db with an id for each word.		
 exportcsvtxt : exports links db with a plain text words. #needs unicode fix to stop crashin in win		
+
+With empty database works as shell, passing the query to sociation.org.
