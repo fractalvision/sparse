@@ -251,7 +251,7 @@ def link_words(check=True, logging=True):
             if related_word_id != None:
                 db_save_link(word_id, int(rate.split('/')[0]), int(rate.split('/')[1]), related_word_id, check=check, logging=logging)
             else:
-                print('%s is not present in DB, skipping.' % link[0])
+                print('%s is not present in DB, skipping.' % link)
 
         update_links_count(word)
 
