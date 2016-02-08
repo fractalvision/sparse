@@ -265,8 +265,8 @@ def return_words_db(word, numbers=False, ids=False):
         for link_id, rate_to, rate_from in links:
             link = cursor.execute('''SELECT word FROM word WHERE id=?''', (link_id,)).fetchone()[0]
             if numbers:
-                wordlist.append((''.join(str(ABC.index(l.upper())+1) for l in word),
-                                 rate_to, rate_from, ''.join(str(ABC.index(l.upper())+1) for l in link)))
+                wordlist.append(((''.join('0'+str(ABC.index(l.upper())+1) if (ABC.index(l.upper())+1) < 10 else str(ABC.index(l.upper())+1) for l in word)),
+                                 rate_to, rate_from, (''.join('0'+str(ABC.index(l.upper())+1) if (ABC.index(l.upper())+1) < 10 else str(ABC.index(l.upper())+1) for l in link))))
             elif ids:
                 wordlist.append((id_by_word(word), rate_to, rate_from, link_id))
             else:
@@ -276,6 +276,7 @@ def return_words_db(word, numbers=False, ids=False):
             pass
         else:
             warning('return_words_db() [ %s ]' % e)
+
     return wordlist
 
 
