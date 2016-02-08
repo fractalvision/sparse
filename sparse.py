@@ -374,8 +374,8 @@ def main():
                 print('Nothing found in DB. :(\nAsking sociation.ru...')
                 parse_word(word)
             else:
-                for word, rate_to, rate_from, w in sorted(words, reverse=True):
-                    print(word, rate_to, rate_from, w)
+                for word, rate_to, rate_from, related_word in sorted(words, reverse=True):
+                    print(word, rate_to, rate_from, related_word)
     db.close()
 
 
