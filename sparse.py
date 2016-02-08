@@ -246,12 +246,12 @@ def update_links_count(word):
 
 def link_words(check=True, logging=True):
     for word_id, word in cursor.execute('''SELECT id, word FROM word''').fetchall():
-        for link, rate in parse_word(word):
-            related_word_id = id_by_word(link.decode('utf-8'))
+        for related_word, rate in parse_word(word):
+            related_word_id = id_by_word(related_word.decode('utf-8'))
             if related_word_id != None:
                 db_save_link(word_id, int(rate.split('/')[0]), int(rate.split('/')[1]), related_word_id, check=check, logging=logging)
             else:
-                print('%s is not present in DB, skipping.' % link)
+                print('%s is not present in DB, skipping.' % related_word)
 
         update_links_count(word)
 
@@ -259,18 +259,18 @@ def link_words(check=True, logging=True):
 def return_words_db(word, numbers=False, ids=False):
     wordlist = []
     try:
-        word_id = cursor.execute('''SELECT id FROM word WHERE word=?''', (word,)).fetchone()[0]
+        word_id = id_by_word(word)
         links = cursor.execute('''SELECT related_word_id, rate_to, rate_from FROM relation WHERE word_id=?''',(word_id,)).fetchall()
         print('Found: %s links for [ %s ]\n' % (len(links),word))
-        for link_id, rate_to, rate_from in links:
-            link = word_by_id(link_id)
+        for related_word_id, rate_to, rate_from in links:
+            related_word = word_by_id(related_word_id)
             if numbers:
                 wordlist.append(((''.join('0'+str(ABC.index(l.upper())+1) if (ABC.index(l.upper())+1) < 10 else str(ABC.index(l.upper())+1) for l in word)),
                                  rate_to, rate_from, (''.join('0'+str(ABC.index(l.upper())+1) if (ABC.index(l.upper())+1) < 10 else str(ABC.index(l.upper())+1) for l in link))))
             elif ids:
-                wordlist.append((id_by_word(word), rate_to, rate_from, link_id))
+                wordlist.append((id_by_word(word), rate_to, rate_from, related_word_id))
             else:
-                wordlist.append((word, rate_to, rate_from, link))
+                wordlist.append((word, rate_to, rate_from, related_word))
     except Exception as e:
         if 'NoneType' in e.message:
             pass
