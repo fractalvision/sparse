@@ -263,7 +263,7 @@ def return_words_db(word, numbers=False, ids=False):
         links = cursor.execute('''SELECT related_word_id, rate_to, rate_from FROM relation WHERE word_id=?''',(word_id,)).fetchall()
         print('Found: %s links for [ %s ]\n' % (len(links),word))
         for link_id, rate_to, rate_from in links:
-            link = cursor.execute('''SELECT word FROM word WHERE id=?''', (link_id,)).fetchone()[0]
+            link = word_by_id(link_id)
             if numbers:
                 wordlist.append(((''.join('0'+str(ABC.index(l.upper())+1) if (ABC.index(l.upper())+1) < 10 else str(ABC.index(l.upper())+1) for l in word)),
                                  rate_to, rate_from, (''.join('0'+str(ABC.index(l.upper())+1) if (ABC.index(l.upper())+1) < 10 else str(ABC.index(l.upper())+1) for l in link))))
@@ -316,6 +316,8 @@ def build_db(rebuild=False, autocleanup=True):
     db_cleanup(autoremove=autocleanup)
     print('\nDB building complete. %s words were saved to DB in %s links.' % ((cursor.execute('''SELECT count() FROM word''', ).fetchone())[0],
                                                                         (cursor.execute('''SELECT count() FROM relation''', ).fetchone())[0]))
+
+
 def db_all_words():
     return db.execute('''SELECT word FROM word''',)
 
