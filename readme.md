@@ -1,4 +1,6 @@
-# sparse
+##sparse    
+Parsing engine and utilities for russian associations data of the sociation.org
+
 Use the following commands in interactive mode:		
 
 dbbuild : builds the initial database, parsing all words and their links from the website.		
