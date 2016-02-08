@@ -337,36 +337,31 @@ def db_export(numbers=False, ids=False):
     print('Wrote dump to: db_export.csv')
 
 def main():
-    run = True
-    print('\nLoaded %s words in %s links.' % ((cursor.execute('''SELECT count() FROM word''', ).fetchone())[0],
-                                                                    (cursor.execute('''SELECT count() FROM relation''', ).fetchone())[0]))
-    while run:
-        print('\nEnter a word to find or a command to execute:')
-        word = raw_input('>>').decode('utf-8')
-        if word == 'quit':
-            run = False
-        elif word == 'dbbuild':
+    arg = sys.argv
+    if len(arg) != 1:
+        word = arg[1].decode('utf-8')
+        if word == '--dbbuild':
             build_db(autocleanup=False)
-        elif word == 'dbrebuild':
+        elif word == '--dbrebuild':
             build_db(rebuild=True, autocleanup=False)
-        elif word == 'webstat':
+        elif word == '--webstat':
             get_global_wordscount()
-        elif word == 'dbstat':
+        elif word == '--dbstat':
             print('\n%s words in %s links.\n' % ((cursor.execute('''SELECT count() FROM word''', ).fetchone())[0],
                                                                         (cursor.execute('''SELECT count() FROM relation''', ).fetchone())[0]))
-        elif word == 'dbparseweb':
+        elif word == '--dbparseweb':
             parse_all_to_db()
-        elif word == 'dblink':
+        elif word == '--dblink':
             link_words(check=False, logging=False)
-        elif word == 'dbrelink':
+        elif word == '--dbrelink':
             link_words()
-        elif word == 'dbcleanup':
+        elif word == '--dbcleanup':
             db_cleanup(autoremove=False)
-        elif word == 'exportcsvnum':
+        elif word == '--exportcsvnum':
             db_export(numbers=True)
-        elif word == 'exportcsvid':
+        elif word == '--exportcsvid':
             db_export(ids=True)
-        elif word == 'exportcsvtxt':
+        elif word == '--exportcsvtxt':
             db_export()
         else:
             words = return_words_db(word)
@@ -376,6 +371,46 @@ def main():
             else:
                 for word, rate_to, rate_from, related_word in sorted(words, reverse=True):
                     print(word, rate_to, rate_from, related_word)
+    else:
+        run = True
+        print('\nLoaded %s words in %s links.' % ((cursor.execute('''SELECT count() FROM word''', ).fetchone())[0],
+                                                                        (cursor.execute('''SELECT count() FROM relation''', ).fetchone())[0]))
+        while run:
+            print('\nEnter a word to find or a command to execute:')
+            word = raw_input('>>').decode('utf-8')
+            if word == 'quit':
+                run = False
+            elif word == 'dbbuild':
+                build_db(autocleanup=False)
+            elif word == 'dbrebuild':
+                build_db(rebuild=True, autocleanup=False)
+            elif word == 'webstat':
+                get_global_wordscount()
+            elif word == 'dbstat':
+                print('\n%s words in %s links.\n' % ((cursor.execute('''SELECT count() FROM word''', ).fetchone())[0],
+                                                                            (cursor.execute('''SELECT count() FROM relation''', ).fetchone())[0]))
+            elif word == 'dbparseweb':
+                parse_all_to_db()
+            elif word == 'dblink':
+                link_words(check=False, logging=False)
+            elif word == 'dbrelink':
+                link_words()
+            elif word == 'dbcleanup':
+                db_cleanup(autoremove=False)
+            elif word == 'exportcsvnum':
+                db_export(numbers=True)
+            elif word == 'exportcsvid':
+                db_export(ids=True)
+            elif word == 'exportcsvtxt':
+                db_export()
+            else:
+                words = return_words_db(word)
+                if len(words) == 0:
+                    print('Nothing found in DB. :(\nAsking sociation.ru...')
+                    parse_word(word)
+                else:
+                    for word, rate_to, rate_from, related_word in sorted(words, reverse=True):
+                        print(word, rate_to, rate_from, related_word)
     db.close()
 
 
