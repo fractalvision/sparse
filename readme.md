@@ -3,7 +3,8 @@ Parsing engine and utilities for the data from sociation.org.
 
 Use the following commands in interactive mode:
 
-dbbuild - builds the database initially, parsing all words and their links from the website.  dbrebuild - updates the existing database automatically.
+dbbuild - builds the database initially, parsing all words and their links from the website.
+dbrebuild - updates the existing database automatically.
 webstat - lists total numbers of the words on the website.
 dbstat - prints words/links in db.
 
