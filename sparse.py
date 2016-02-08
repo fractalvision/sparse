@@ -272,7 +272,10 @@ def return_words_db(word, numbers=False, ids=False):
             else:
                 wordlist.append((word, rate_to, rate_from, link))
     except Exception as e:
-        warning('return_words_db() [ %s ]' % e)
+        if 'NoneType' in e.message:
+            pass
+        else:
+            warning('return_words_db() [ %s ]' % e)
     return wordlist
 
 
@@ -290,7 +293,7 @@ def db_cleanup(autoremove=False):
                 cursor.execute('''DELETE FROM word WHERE links IS NULL OR links = 0''', )
         else:
             prompt = True
-            delete = raw_input('Remove dead words (with no links)? [Y/N]\n').decode('utf-8')
+            delete = raw_input('Remove dead words (with no links)? [Y/N]\n>>').decode('utf-8')
             while prompt:
                 if delete == 'N':
                     break
@@ -300,7 +303,7 @@ def db_cleanup(autoremove=False):
                         cursor.execute('''DELETE FROM word WHERE links IS NULL OR links = 0''', )
                         prompt = False
                 else:
-                    delete = raw_input('Wrong command. Available [Y/N]\n').decode('utf-8')
+                    delete = raw_input('Wrong command. Available [Y/N]\n>>').decode('utf-8')
 
     db.commit()
 
@@ -335,8 +338,8 @@ def main():
     print('\nLoaded %s words in %s links.' % ((cursor.execute('''SELECT count() FROM word''', ).fetchone())[0],
                                                                     (cursor.execute('''SELECT count() FROM relation''', ).fetchone())[0]))
     while run:
-        print('\nEnter word to find or a command to execute:\n')
-        word = raw_input().decode('utf-8')
+        print('\nEnter a word to find or a command to execute:')
+        word = raw_input('>>').decode('utf-8')
         if word == 'quit':
             run = False
         elif word == 'dbbuild':
