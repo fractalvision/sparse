@@ -1,7 +1,7 @@
 ##sparse    
 Parsing engine and utilities for russian associations data of the sociation.org
 
-Use the following commands in interactive mode:		
+Use the following commands in interactive mode or as the script arguments: # like sparse.py --dbstat		
 
 dbbuild : builds the initial database, parsing all words and their links from the website.		
 dbrebuild : updates the existing database automatically.		
@@ -22,4 +22,4 @@ exportcsvnum : exports links db with a position number for each word charachter.
 exportcsvid : exports links db with an id for each word.		
 exportcsvtxt : exports links db with a plain text words. #needs unicode fix to stop crashin in win		
 
-With empty database works as shell, passing the query to sociation.org.
+With no arguments launches in the interactive mode, with empty database works as shell, passing the query to sociation.org. 
