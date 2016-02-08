@@ -114,7 +114,7 @@ def get_words(letter, page):
 
 def parse_word(word):
     wordslist = []
-    notfound = False
+    found = True
     view = requests.request('GET', ''.join([root_url, 'word/', word, '/']))
     soup = BeautifulSoup(view.content)
     page = str(soup.find_all('div', class_= "text")).split('\n')
@@ -122,7 +122,7 @@ def parse_word(word):
     print ('Processing associations for: [ %s ]' % word)
 
     if '404' in page[1]:
-        notfound = True
+        found = False
         print('Was not found in internets. :(')
 
     else:
@@ -134,7 +134,7 @@ def parse_word(word):
     for i in xrange(len(wordslist)):
         (wordslist[i].reverse())
 
-    if not notfound:
+    if found:
         print ('Found %s associations:\n'
                % len(wordslist), (' '.join(wordslist[x-1][0] if x % 15 != 0 else '\n' for x in xrange(len(wordslist)+1))),'\n')
 
