@@ -303,7 +303,7 @@ def db_cleanup(autoremove=False):
                         cursor.execute('''DELETE FROM word WHERE links IS NULL OR links = 0''', )
                         prompt = False
                 else:
-                    delete = raw_input('Wrong command. Available [Y/N]\n>>').decode('utf-8')
+                    delete = raw_input('Wrong input! [Y/N]\n>>').decode('utf-8')
 
     db.commit()
 
