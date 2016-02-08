@@ -53,6 +53,7 @@ def warning(*objs):
         print("{} >> WARNING: {}".format(datetime.datetime.today(),''.join(str(i) for i in objs)), file=text_file)
     print("WARNING: ", *objs, file=sys.stderr)
 
+
 def log(*objs):
     with open("sparse.log", "a") as text_file:
         print("{} >> INFO: {}".format(datetime.datetime.today(),''.join(str(i) for i in objs)), file=text_file)
@@ -335,6 +336,7 @@ def db_export(numbers=False, ids=False):
             for word, rate_to, rate_from, related_word in sorted(words, reverse=True):
                 print(', '.join((str(word), str(rate_to), str(rate_from), str(related_word))), file=f)
     print('Wrote dump to: db_export.csv')
+
 
 def main():
     arg = sys.argv
