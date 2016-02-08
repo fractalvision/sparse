@@ -1,5 +1,5 @@
 # sparse
-Parsing engine and utilities for sociation.org data.
+Parsing engine and utilities for the data from sociation.org.
 
 Use the following commands in interactive mode:
 
