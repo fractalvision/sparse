@@ -267,7 +267,7 @@ def return_words_db(word, numbers=False, ids=False):
             related_word = word_by_id(related_word_id)
             if numbers:
                 wordlist.append(((''.join('0'+str(ABC.index(l.upper())+1) if (ABC.index(l.upper())+1) < 10 else str(ABC.index(l.upper())+1) for l in word)),
-                                 rate_to, rate_from, (''.join('0'+str(ABC.index(l.upper())+1) if (ABC.index(l.upper())+1) < 10 else str(ABC.index(l.upper())+1) for l in link))))
+                                 rate_to, rate_from, (''.join('0'+str(ABC.index(l.upper())+1) if (ABC.index(l.upper())+1) < 10 else str(ABC.index(l.upper())+1) for l in related_word))))
             elif ids:
                 wordlist.append((id_by_word(word), rate_to, rate_from, related_word_id))
             else:
