@@ -365,6 +365,8 @@ def main():
             db_export(ids=True)
         elif word == '--exportcsvtxt':
             db_export()
+        elif word == '--quit':
+            print("I knew, u'll try it!")
         else:
             words = return_words_db(word)
             if len(words) == 0:
