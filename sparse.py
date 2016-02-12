@@ -21,9 +21,10 @@ try:
     db = sqlite3.connect(DATABASE_URI)
     cursor = db.cursor()
     cursor.execute("PRAGMA cache_size = 65536")
+    cursor.execute("PRAGMA foreign_keys = ON")
     cursor.execute('''CREATE TABLE IF NOT EXISTS word(id INTEGER PRIMARY KEY NOT NULL UNIQUE, word varchar(64) NOT NULL UNIQUE, links INTEGER, updated DATETIME)''')
     cursor.execute('''CREATE TABLE IF NOT EXISTS relation(id INTEGER PRIMARY KEY NOT NULL UNIQUE, word_id INTEGER, rate_to INTEGER, rate_from INTEGER, related_word_id INTEGER,
-                      updated DATETIME, FOREIGN KEY(word_id) REFERENCES word(id), FOREIGN KEY(related_word_id) REFERENCES word(id))''')
+                      updated DATETIME, FOREIGN KEY(word_id) REFERENCES word(id) ON DELETE CASCADE , FOREIGN KEY(related_word_id) REFERENCES word(id) ON DELETE CASCADE )''')
     cursor.execute('''CREATE UNIQUE INDEX IF NOT EXISTS rel_index ON relation(word_id,related_word_id)''')
     db.commit()
 except Exception as e:
